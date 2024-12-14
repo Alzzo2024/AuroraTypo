@@ -1,0 +1,251 @@
+:root {
+    --primary: #2563eb;
+    --primary-dark: #1d4ed8;
+    --bg-light: #ffffff;
+    --text-light: #374151;
+    --border-light: #e5e7eb;
+    --sidebar-light: #f9fafb;
+    --hover-light: #e2e8f0;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg-light);
+    color: var(--text-light);
+    height: 100vh;
+}
+
+.app-container {
+    display: flex;
+    height: 100vh;
+}
+
+.sidebar {
+    width: 250px;
+    background: var(--sidebar-light);
+    border-right: 1px solid var(--border-light);
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem;
+}
+
+.logo-image {
+    max-width: 50px;
+    height: auto;
+}
+
+.nav-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    border: none;
+    background: transparent;
+    color: var(--text-light);
+    cursor: pointer;
+    border-radius: 0.375rem;
+    transition: all 0.2s;
+}
+
+.nav-item:hover {
+    background: var(--hover-light);
+}
+
+.nav-item i {
+    width: 20px;
+    text-align: center;
+}
+
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid var(--border-light);
+    background: white;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+#documentTitle {
+    border: none;
+    font-size: 1rem;
+    padding: 0.5rem;
+    border-radius: 0.375rem;
+    background: transparent;
+}
+
+.page-navigation {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.page-navigation button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: var(--primary);
+}
+
+.page-navigation button:disabled {
+    color: #ccc;
+    cursor: not-allowed;
+}
+
+#pageIndicator {
+    font-size: 0.9rem;
+    color: var(--text-light);
+}
+
+.page-controls {
+    display: flex;
+    align-items: center;
+}
+
+#newPageBtn {
+    padding: 0.5rem 1rem;
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 0.375rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+#newPageBtn:hover {
+    background-color: var(--primary-dark);
+}
+
+#editor-container {
+    flex: 1;
+    padding: 2rem;
+    background: #f0f0f0;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.page {
+    background: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin: 2rem auto;
+    padding: 3rem;
+    width: 21cm;
+    min-height: 29.7cm;
+    position: relative;
+    box-sizing: border-box;
+}
+
+.page-for-pdf {
+    background: white;
+    padding: 2cm;
+    margin-bottom: 1cm;
+    width: 21cm;
+    min-height: 29.7cm;
+    box-sizing: border-box;
+}
+
+.editor {
+    height: calc(29.7cm - 6rem);
+    overflow-y: auto;
+}
+
+.page-number {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    font-size: 0.8rem;
+    color: #666;
+}
+
+.document-management {
+    margin-top: 20px;
+}
+
+.document-management ul {
+    list-style: none;
+    padding: 0;
+}
+
+.document-management li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.document-management button {
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 0.375rem;
+    padding: 0.25rem 0.5rem;
+    cursor: pointer;
+    margin-left: 0.5rem;
+}
+
+#image-resize-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+    background-color: white;
+    margin: 15% auto;
+    padding: 20px;
+    width: 300px;
+    text-align: center;
+    border-radius: 0.375rem;
+}
+
+.ql-toolbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: white;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+}
+
+.ql-container {
+    font-size: 12pt;
+    line-height: 1.5;
+}
