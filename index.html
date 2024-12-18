@@ -21,27 +21,30 @@
             <nav class="nav-menu">
                 <button class="nav-item" data-action="new">
                     <i class="fas fa-plus"></i>
-                    <span>Novo</span>
+                    <span data-translate="newDocument">Novo</span>
                 </button>
                 <button class="nav-item" data-action="save">
                     <i class="fas fa-save"></i>
-                    <span>Salvar</span>
+                    <span data-translate="save">Salvar</span>
                 </button>
-                <button class="nav-item" data-action="export-pdf">
-                    <i class="fas fa-file-pdf"></i>
-                    <span>Exportar PDF</span>
-                </button>
-                <button class="nav-item" data-action="export-docx">
-                    <i class="fas fa-file-word"></i>
-                    <span>Exportar WORD</span>
-                </button>
-                <button class="nav-item" data-action="export-txt">
-                    <i class="fas fa-file-alt"></i>
-                    <span>Exportar TEXTO</span>
+                <div class="nav-item dropdown">
+                    <button class="dropdown-toggle">
+                        <i class="fas fa-file-export"></i>
+                        <span data-translate="export">Exportar</span>
+                    </button>
+                    <div class="dropdown-menu">
+                        <button data-action="export-pdf">PDF</button>
+                        <button data-action="export-docx">Word</button>
+                        <button data-action="export-txt">Texto</button>
+                    </div>
+                </div>
+                <button class="nav-item language-btn" data-action="language">
+                    <i class="fas fa-globe"></i>
+                    <span data-translate="language">Idioma</span>
                 </button>
             </nav>
             <div class="document-management">
-                <h3>Documentos</h3>
+                <h3 data-translate="documentsList">Documentos</h3>
                 <ul id="documentList"></ul>
             </div>
         </aside>
@@ -49,19 +52,19 @@
         <main class="main-content">
             <div class="top-bar">
                 <div class="document-info">
-                    <input type="text" id="documentTitle" placeholder="Documento sem título">
+                    <input type="text" id="documentTitle" placeholder="Documento sem título" data-translate="documentTitle">
                 </div>
                 <div class="page-navigation">
                     <button id="prevPageBtn">
                         <i class="fas fa-chevron-left"></i>
                     </button>
-                    <span id="pageIndicator">Página 1 de 1</span>
+                    <span id="pageIndicator">1/1</span>
                     <button id="nextPageBtn">
                         <i class="fas fa-chevron-right"></i>
                     </button>
                 </div>
                 <div class="page-controls">
-                    <button id="newPageBtn">Nova Página</button>
+                    <button id="newPageBtn" data-translate="newPage">Nova Página</button>
                 </div>
             </div>
             <div id="editor-container"></div>
@@ -70,12 +73,95 @@
 
     <div id="image-resize-modal" class="modal">
         <div class="modal-content">
-            <h2>Redimensionar Imagem</h2>
+            <h2 data-translate="imageResize">Redimensionar Imagem</h2>
             <input type="range" id="image-size-slider" min="50" max="200" value="100">
-            <button id="apply-image-resize">Aplicar</button>
-            <button id="cancel-image-resize">Cancelar</button>
+            <div class="modal-buttons">
+                <button id="apply-image-resize" data-translate="apply">Aplicar</button>
+                <button id="cancel-image-resize" data-translate="cancel">Cancelar</button>
+            </div>
         </div>
     </div>
+
+    <div id="language-modal" class="modal">
+        <div class="modal-content language-selector">
+            <h2 data-translate="selectLanguage">Select Language</h2>
+            <div class="language-options">
+                <div class="language-option" data-lang="en">
+                    <img src="https://flagcdn.com/w40/gb.png" alt="English" class="flag-image">
+                    <span>English</span>
+                </div>
+                <div class="language-option" data-lang="pt">
+                    <img src="flags/portugalflag.png" alt="Português" class="flag-image">
+                    <span>Portuguez</span>
+                </div>                
+                <div class="language-option" data-lang="es">
+                    <img src="https://flagcdn.com/w40/es.png" alt="Español" class="flag-image">
+                    <span>Español</span>
+                </div>
+                <div class="language-option" data-lang="fr">
+                    <img src="https://flagcdn.com/w40/fr.png" alt="Français" class="flag-image">
+                    <span>Français</span>
+                </div>
+                <div class="language-option" data-lang="de">
+                    <img src="https://flagcdn.com/w40/de.png" alt="Deutsch" class="flag-image">
+                    <span>Deutsch</span>
+                </div>
+                <div class="language-option" data-lang="it">
+                    <img src="https://flagcdn.com/w40/it.png" alt="Italiano" class="flag-image">
+                    <span>Italiano</span>
+                </div>
+                <div class="language-option" data-lang="zh">
+                    <img src="https://flagcdn.com/w40/cn.png" alt="中文" class="flag-image">
+                    <span>中文</span>
+                </div>
+                <div class="language-option" data-lang="ja">
+                    <img src="https://flagcdn.com/w40/jp.png" alt="日本語" class="flag-image">
+                    <span>日本語</span>
+                </div>
+                <div class="language-option" data-lang="ko">
+                    <img src="https://flagcdn.com/w40/kr.png" alt="한국어" class="flag-image">
+                    <span>한국어</span>
+                </div>
+                <div class="language-option" data-lang="ru">
+                    <img src="https://flagcdn.com/w40/ru.png" alt="Русский" class="flag-image">
+                    <span>Русский</span>
+                </div>
+                <div class="language-option" data-lang="hu">
+                    <img src="https://flagcdn.com/w40/hu.png" alt="Magyar" class="flag-image">
+                    <span>Magyar</span>
+                </div>
+                <div class="language-option" data-lang="he">
+                    <img src="https://flagcdn.com/w40/il.png" alt="עברית" class="flag-image">
+                    <span>עברית</span>
+                </div>
+                <div class="language-option" data-lang="ar">
+                    <img src="https://flagcdn.com/w40/sa.png" alt="اَلْعَرَبِيَّةُ" class="flag-image">
+                    <span>العربية</span>
+                </div>
+                <div class="language-option" data-lang="hi">
+                    <img src="https://flagcdn.com/w40/in.png" alt="हिन्दी" class="flag-image">
+                    <span>हिन्दी</span>
+                </div>
+                <div class="language-option" data-lang="sl">
+                    <img src="https://flagcdn.com/w40/si.png" alt="Slovenski" class="flag-image">
+                    <span>Slovenski</span>
+                </div>
+                <div class="language-option" data-lang="da">
+                    <img src="https://flagcdn.com/w40/dk.png" alt="Dansk" class="flag-image">
+                    <span>Dansk</span>
+                </div>
+                <div class="language-option" data-lang="tr">
+                    <img src="https://flagcdn.com/w40/tr.png" alt="Türkçe" class="flag-image">
+                    <span>Türkçe</span>
+                </div>
+                <h3 data-translate="extra">Extra</h3>
+                <div class="language-option" data-lang="eo">
+                    <img src="flags/esperantoflag.jpg" alt="Esperanto" class="flag-image">
+                    <span>Esperanto</span>
+                </div>
+            </div>
+        </div>
+    </div>    
 
     <script src="app.js"></script>
 </body>
