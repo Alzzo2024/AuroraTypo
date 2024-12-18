@@ -1,3 +1,4 @@
+/* Desktop Styles */
 :root {
     --primary: #2563eb;
     --primary-dark: #1d4ed8;
@@ -164,7 +165,6 @@ body {
     width: 21cm;
     min-height: 29.7cm;
     position: relative;
-    box-sizing: border-box;
 }
 
 .page-for-pdf {
@@ -173,7 +173,6 @@ body {
     margin-bottom: 1cm;
     width: 21cm;
     min-height: 29.7cm;
-    box-sizing: border-box;
 }
 
 .editor {
@@ -248,4 +247,92 @@ body {
 .ql-container {
     font-size: 12pt;
     line-height: 1.5;
+}
+
+/* Mobile Styles - Starting at 768px breakpoint */
+@media (max-width: 768px) {
+    .app-container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        padding: 0.5rem;
+        border-top: 1px solid var(--border-light);
+        border-right: none;
+        background: white;
+        z-index: 1000;
+    }
+
+    .logo {
+        display: none;
+    }
+
+    .nav-menu {
+        flex-direction: row;
+        justify-content: space-around;
+    }
+
+    .nav-item {
+        flex-direction: column;
+        padding: 0.5rem;
+        font-size: 0.75rem;
+    }
+
+    .nav-item i {
+        margin-bottom: 0.25rem;
+    }
+
+    .main-content {
+        padding-bottom: 80px;
+    }
+
+    .top-bar {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    #editor-container {
+        padding: 0.5rem;
+    }
+
+    .page {
+        width: 100%;
+        padding: 1rem;
+        margin: 0.5rem 0;
+        min-height: calc(100vh - 200px);
+    }
+
+    .document-management {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: calc(100vh - 80px);
+        background: white;
+        z-index: 999;
+        padding: 1rem;
+        overflow-y: auto;
+        display: none;
+    }
+
+    .document-management.active {
+        display: block;
+    }
+
+    .modal-content {
+        width: 90%;
+        margin: 50% auto;
+    }
+
+    .ql-toolbar {
+        flex-wrap: wrap;
+    }
+
+    .ql-toolbar button {
+        padding: 3px 5px;
+    }
 }
