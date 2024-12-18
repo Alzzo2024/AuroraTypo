@@ -6,6 +6,279 @@ class AuroraEditor {
         this.currentImageToResize = null;
         this.editors = [];
         this.currentDocumentTitle = '';
+        this.currentLanguage = localStorage.getItem('preferredLanguage') || 'pt';
+        this.translations = {
+            en: {
+                newDocument: 'New',
+                save: 'Save',
+                documents: 'Documents',
+                export: 'Export',
+                language: 'Language',
+                documentTitle: 'Document title',
+                newPage: 'New Page',
+                documentsList: 'Documents List',
+                imageResize: 'Resize Image',
+                apply: 'Apply',
+                cancel: 'Cancel',
+                selectLanguage: 'Select Language',
+                extra: 'Extra'
+            },
+            pt: {
+                newDocument: 'Novo',
+                save: 'Salvar',
+                documents: 'Documentos',
+                export: 'Exportar',
+                language: 'Idioma',
+                documentTitle: 'Título do documento',
+                newPage: 'Nova Página',
+                documentsList: 'Lista de Documentos',
+                imageResize: 'Redimensionar Imagem',
+                apply: 'Aplicar',
+                cancel: 'Cancelar',
+                selectLanguage: 'Selecionar Idioma',
+                extra: 'Extra'
+            },
+            es: {
+                newDocument: 'Nuevo',
+                save: 'Guardar',
+                documents: 'Documentos',
+                export: 'Exportar',
+                language: 'Idioma',
+                documentTitle: 'Título del documento',
+                newPage: 'Nueva Página',
+                documentsList: 'Lista de Documentos',
+                imageResize: 'Redimensionar Imagen',
+                apply: 'Aplicar',
+                cancel: 'Cancelar',
+                selectLanguage: 'Seleccionar Idioma',
+                extra: 'Extra'
+            },
+            fr: {
+                newDocument: 'Nouveau',
+                save: 'Enregistrer',
+                documents: 'Documents',
+                export: 'Exporter',
+                language: 'Langue',
+                documentTitle: 'Titre du document',
+                newPage: 'Nouvelle Page',
+                documentsList: 'Liste des Documents',
+                imageResize: 'Redimensionner l\'Image',
+                apply: 'Appliquer',
+                cancel: 'Annuler',
+                selectLanguage: 'Sélectionner la Langue',
+                extra: 'Extra'
+            },
+            de: {
+                newDocument: 'Neu',
+                save: 'Speichern',
+                documents: 'Dokumente',
+                export: 'Exportieren',
+                language: 'Sprache',
+                documentTitle: 'Dokumenttitel',
+                newPage: 'Neue Seite',
+                documentsList: 'Dokumentenliste',
+                imageResize: 'Bildgröße ändern',
+                apply: 'Anwenden',
+                cancel: 'Abbrechen',
+                selectLanguage: 'Sprache auswählen',
+                extra: 'Extra'
+            },
+            it: {
+                newDocument: 'Nuovo',
+                save: 'Salva',
+                documents: 'Documenti',
+                export: 'Esporta',
+                language: 'Lingua',
+                documentTitle: 'Titolo del documento',
+                newPage: 'Nuova Pagina',
+                documentsList: 'Lista Documenti',
+                imageResize: 'Ridimensiona Immagine',
+                apply: 'Applica',
+                cancel: 'Annulla',
+                selectLanguage: 'Seleziona Lingua',
+                extra: 'Extra'
+            },
+            zh: {
+                newDocument: '新建',
+                save: '保存',
+                documents: '文档',
+                export: '导出',
+                language: '语言',
+                documentTitle: '文档标题',
+                newPage: '新页面',
+                documentsList: '文档列表',
+                imageResize: '调整图片大小',
+                apply: '应用',
+                cancel: '取消',
+                selectLanguage: '选择语言',
+                extra: '额外'
+            },
+            ja: {
+                newDocument: '新規',
+                save: '保存',
+                documents: '文書',
+                export: 'エクスポート',
+                language: '言語',
+                documentTitle: '文書タイトル',
+                newPage: '新しいページ',
+                documentsList: '文書リスト',
+                imageResize: '画像サイズ変更',
+                apply: '適用',
+                cancel: 'キャンセル',
+                selectLanguage: '言語選択',
+                extra: '追加'
+            },
+            ko: {
+                newDocument: '새로 만들기',
+                save: '저장',
+                documents: '문서',
+                export: '내보내기',
+                language: '언어',
+                documentTitle: '문서 제목',
+                newPage: '새 페이지',
+                documentsList: '문서 목록',
+                imageResize: '이미지 크기 조정',
+                apply: '적용',
+                cancel: '취소',
+                selectLanguage: '언어 선택',
+                extra: '추가'
+            },
+            ru: {
+                newDocument: 'Новый',
+                save: 'Сохранить',
+                documents: 'Документы',
+                export: 'Экспорт',
+                language: 'Язык',
+                documentTitle: 'Название документа',
+                newPage: 'Новая страница',
+                documentsList: 'Список документов',
+                imageResize: 'Изменить размер изображения',
+                apply: 'Применить',
+                cancel: 'Отмена',
+                selectLanguage: 'Выбрать язык',
+                extra: 'Дополнительно'
+            },
+            hu: {
+                newDocument: 'Új',
+                save: 'Mentés',
+                documents: 'Dokumentumok',
+                export: 'Exportálás',
+                language: 'Nyelv',
+                documentTitle: 'Dokumentum címe',
+                newPage: 'Új oldal',
+                documentsList: 'Dokumentumok listája',
+                imageResize: 'Kép átméretezése',
+                apply: 'Alkalmaz',
+                cancel: 'Mégse',
+                selectLanguage: 'Nyelv kiválasztása',
+                extra: 'Extra'
+            },
+            he: {
+                newDocument: 'חדש',
+                save: 'שמור',
+                documents: 'מסמכים',
+                export: 'ייצוא',
+                language: 'שפה',
+                documentTitle: 'כותרת המסמך',
+                newPage: 'דף חדש',
+                documentsList: 'רשימת מסמכים',
+                imageResize: 'שינוי גודל תמונה',
+                apply: 'החל',
+                cancel: 'ביטול',
+                selectLanguage: 'בחר שפה',
+                extra: 'נוסף'
+            },
+            ar: {
+                newDocument: 'جديد',
+                save: 'حفظ',
+                documents: 'المستندات',
+                export: 'تصدير',
+                language: 'اللغة',
+                documentTitle: 'عنوان المستند',
+                newPage: 'صفحة جديدة',
+                documentsList: 'قائمة المستندات',
+                imageResize: 'تغيير حجم الصورة',
+                apply: 'تطبيق',
+                cancel: 'إلغاء',
+                selectLanguage: 'اختر اللغة',
+                extra: 'إضافي'
+            },
+            hi: {
+                newDocument: 'नया',
+                save: 'सहेजें',
+                documents: 'दस्तावेज़',
+                export: 'निर्यात',
+                language: 'भाषा',
+                documentTitle: 'दस्तावेज़ का शीर्षक',
+                newPage: 'नया पृष्ठ',
+                documentsList: 'दस्तावेज़ों की सूची',
+                imageResize: 'छवि का आकार बदलें',
+                apply: 'लागू करें',
+                cancel: 'रद्द करें',
+                selectLanguage: 'भाषा चुनें',
+                extra: 'अतिरिक्त'
+            },
+            sl: {
+                newDocument: 'Nov',
+                save: 'Shrani',
+                documents: 'Dokumenti',
+                export: 'Izvozi',
+                language: 'Jezik',
+                documentTitle: 'Naslov dokumenta',
+                newPage: 'Nova stran',
+                documentsList: 'Seznam dokumentov',
+                imageResize: 'Spremeni velikost slike',
+                apply: 'Uporabi',
+                cancel: 'Prekliči',
+                selectLanguage: 'Izberi jezik',
+                extra: 'Dodatno'
+            },
+            da: {
+                newDocument: 'Ny',
+                save: 'Gem',
+                documents: 'Dokumenter',
+                export: 'Eksporter',
+                language: 'Sprog',
+                documentTitle: 'Dokumenttitel',
+                newPage: 'Ny side',
+                documentsList: 'Dokumentliste',
+                imageResize: 'Tilpas billedstørrelse',
+                apply: 'Anvend',
+                cancel: 'Annuller',
+                selectLanguage: 'Vælg sprog',
+                extra: 'Ekstra'
+            },
+            tr: {
+                newDocument: 'Yeni',
+                save: 'Kaydet',
+                documents: 'Belgeler',
+                export: 'Dışa Aktar',
+                language: 'Dil',
+                documentTitle: 'Belge başlığı',
+                newPage: 'Yeni Sayfa',
+                documentsList: 'Belge Listesi',
+                imageResize: 'Görüntü Boyutunu Değiştir',
+                apply: 'Uygula',
+                cancel: 'İptal',
+                selectLanguage: 'Dil Seç',
+                extra: 'Ekstra'
+            },
+            eo: {
+                newDocument: 'Nova',
+                save: 'Konservi',
+                documents: 'Dokumentoj',
+                export: 'Eksporti',
+                language: 'Lingvo',
+                documentTitle: 'Dokumenta titolo',
+                newPage: 'Nova paĝo',
+                documentsList: 'Dokumenta listo',
+                imageResize: 'Ŝanĝi bildan grandecon',
+                apply: 'Apliki',
+                cancel: 'Nuligi',
+                selectLanguage: 'Elektu lingvon',
+                extra: 'Ekstra'
+            }
+        };        
         this.init();
     }
 
@@ -16,19 +289,12 @@ class AuroraEditor {
         this.setupImageResizing();
         this.loadDocuments();
         this.setupPageNavigation();
-        if (this.isMobile) {
-            this.setupMobileFeatures();
-        }
+        this.setupLanguageSelector();
+        this.updateUILanguage();
     }
 
     setupToolbar() {
-        this.toolbarOptions = this.isMobile ? [
-            ['bold', 'italic', 'underline'],
-            [{ 'header': [1, 2, 3, false] }],
-            [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-            ['link', 'image'],
-            ['clean']
-        ] : [
+        this.toolbarOptions = [
             ['bold', 'italic', 'underline', 'strike'],
             ['blockquote', 'code-block'],
             [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
@@ -44,39 +310,6 @@ class AuroraEditor {
         ];
     }
 
-    setupMobileFeatures() {
-        let touchStartX = 0;
-        let touchEndX = 0;
-
-        document.addEventListener('touchstart', (e) => {
-            touchStartX = e.changedTouches[0].screenX;
-        });
-
-        document.addEventListener('touchend', (e) => {
-            touchEndX = e.changedTouches[0].screenX;
-            this.handleSwipe(touchStartX - touchEndX);
-        });
-
-        // Toggle document list for mobile
-        const docListToggle = document.querySelector('[data-action="documents"]');
-        if (docListToggle) {
-            docListToggle.addEventListener('click', () => {
-                document.querySelector('.document-management').classList.toggle('active');
-            });
-        }
-    }
-
-    handleSwipe(diff) {
-        const swipeThreshold = 50;
-        if (Math.abs(diff) > swipeThreshold) {
-            if (diff > 0 && this.currentPage < this.totalPages) {
-                this.goToNextPage();
-            } else if (diff < 0 && this.currentPage > 1) {
-                this.goToPreviousPage();
-            }
-        }
-    }
-
     createInitialPage() {
         const editorContainer = document.getElementById('editor-container');
         const firstPage = this.createNewPageElement(1);
@@ -87,7 +320,7 @@ class AuroraEditor {
                 toolbar: this.toolbarOptions
             },
             theme: 'snow',
-            placeholder: 'Comece a escrever...'
+            placeholder: '...'
         });
         
         this.editors.push(editor);
@@ -103,7 +336,7 @@ class AuroraEditor {
         
         const pageNumberDiv = document.createElement('div');
         pageNumberDiv.className = 'page-number';
-        pageNumberDiv.textContent = `Página ${pageNumber}`;
+        pageNumberDiv.textContent = `${this.translations[this.currentLanguage].page || 'Página'} ${pageNumber}`;
         pageDiv.appendChild(pageNumberDiv);
         
         return pageDiv;
@@ -119,24 +352,51 @@ class AuroraEditor {
         document.getElementById('documentTitle').addEventListener('input', (e) => {
             this.currentDocumentTitle = e.target.value;
         });
+        
+        if (this.isMobile) {
+            document.querySelector('[data-action="documents"]').addEventListener('click', () => {
+                document.querySelector('.document-management').classList.toggle('active');
+            });
+        }
     }
 
-    addNewPage() {
-        const editorContainer = document.getElementById('editor-container');
-        const newPage = this.createNewPageElement(this.totalPages + 1);
-        editorContainer.appendChild(newPage);
+    setupLanguageSelector() {
+        const languageBtn = document.querySelector('[data-action="language"]');
+        const languageModal = document.getElementById('language-modal');
         
-        const editor = new Quill(newPage.querySelector('.editor'), {
-            modules: {
-                toolbar: this.toolbarOptions
-            },
-            theme: 'snow'
+        languageBtn.addEventListener('click', () => {
+            languageModal.style.display = 'block';
         });
-        
-        this.editors.push(editor);
-        this.totalPages++;
-        this.updatePageNavigation();
-        newPage.scrollIntoView({ behavior: 'smooth' });
+
+        document.querySelectorAll('.language-option').forEach(option => {
+            option.addEventListener('click', () => {
+                const lang = option.dataset.lang;
+                this.changeLanguage(lang);
+                languageModal.style.display = 'none';
+            });
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target === languageModal) {
+                languageModal.style.display = 'none';
+            }
+        });
+    }
+
+    changeLanguage(lang) {
+        this.currentLanguage = lang;
+        localStorage.setItem('preferredLanguage', lang);
+        this.updateUILanguage();
+    }
+
+    updateUILanguage() {
+        const translations = this.translations[this.currentLanguage];
+        document.querySelectorAll('[data-translate]').forEach(element => {
+            const key = element.dataset.translate;
+            if (translations[key]) {
+                element.textContent = translations[key];
+            }
+        });
     }
 
     setupPageNavigation() {
@@ -154,7 +414,7 @@ class AuroraEditor {
         const nextPageBtn = document.getElementById('nextPageBtn');
         const pageIndicator = document.getElementById('pageIndicator');
 
-        pageIndicator.textContent = `Página ${this.currentPage} de ${this.totalPages}`;
+        pageIndicator.textContent = `${this.currentPage}/${this.totalPages}`;
         prevPageBtn.disabled = this.currentPage <= 1;
         nextPageBtn.disabled = this.currentPage >= this.totalPages;
     }
@@ -179,6 +439,24 @@ class AuroraEditor {
             pages[pageNumber - 1].scrollIntoView({ behavior: 'smooth' });
             this.updatePageNavigation();
         }
+    }
+
+    addNewPage() {
+        const editorContainer = document.getElementById('editor-container');
+        const newPage = this.createNewPageElement(this.totalPages + 1);
+        editorContainer.appendChild(newPage);
+        
+        const editor = new Quill(newPage.querySelector('.editor'), {
+            modules: {
+                toolbar: this.toolbarOptions
+            },
+            theme: 'snow'
+        });
+        
+        this.editors.push(editor);
+        this.totalPages++;
+        this.updatePageNavigation();
+        newPage.scrollIntoView({ behavior: 'smooth' });
     }
 
     setupImageResizing() {
@@ -225,7 +503,7 @@ class AuroraEditor {
             await html2pdf().set(opt).from(content).save();
         } catch (error) {
             console.error('Erro ao exportar PDF:', error);
-            alert('Erro ao exportar PDF. Tente novamente.');
+            alert('Erro.');
         }
     }
 
@@ -265,7 +543,7 @@ class AuroraEditor {
     }
 
     createNewDocument() {
-        const documentName = prompt('Nome do novo documento:');
+        const documentName = prompt(this.translations[this.currentLanguage].newDocumentPrompt || 'Nome do novo documento:');
         if (documentName) {
             this.currentDocumentTitle = documentName;
             document.getElementById('documentTitle').value = documentName;
@@ -281,7 +559,8 @@ class AuroraEditor {
     saveDocument() {
         const documentName = this.currentDocumentTitle || 
                            document.getElementById('documentTitle').value || 
-                           'Documento sem título';
+                           this.translations[this.currentLanguage].untitledDocument || 
+                           'No title!';
         const pagesContent = this.editors.map(editor => editor.root.innerHTML);
         
         const document = {
@@ -292,7 +571,7 @@ class AuroraEditor {
         };
 
         this.saveDocumentToList(document);
-        alert('Documento salvo com sucesso!');
+        alert(this.translations[this.currentLanguage].documentSaved || '🎉');
     }
 
     saveDocumentToList(document) {
@@ -310,8 +589,8 @@ class AuroraEditor {
             <li>
                 <span>${doc.name}</span>
                 <div class="document-actions">
-                    <button onclick="window.editor.loadDocument(${doc.id})">Abrir</button>
-                    <button onclick="window.editor.deleteDocument(${doc.id})">Excluir</button>
+                    <button onclick="window.editor.loadDocument(${doc.id})">${this.translations[this.currentLanguage].open || 'Abrir'}</button>
+                    <button onclick="window.editor.deleteDocument(${doc.id})">${this.translations[this.currentLanguage].delete || 'Excluir'}</button>
                 </div>
             </li>
         `).join('');
@@ -348,7 +627,7 @@ class AuroraEditor {
     }
 
     deleteDocument(id) {
-        if (confirm('Tem certeza que deseja excluir este documento?')) {
+        if (confirm(this.translations[this.currentLanguage].confirmDelete || 'Tem certeza que deseja excluir este documento?')) {
             let documents = JSON.parse(localStorage.getItem('auroraDocuments') || '[]');
             documents = documents.filter(doc => doc.id !== id);
             localStorage.setItem('auroraDocuments', JSON.stringify(documents));
