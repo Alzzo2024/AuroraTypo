@@ -1,5 +1,6 @@
 class AuroraEditor {
     constructor() {
+        this.isMobile = window.innerWidth <= 768;
         this.currentPage = 1;
         this.totalPages = 1;
         this.currentImageToResize = null;
@@ -15,10 +16,19 @@ class AuroraEditor {
         this.setupImageResizing();
         this.loadDocuments();
         this.setupPageNavigation();
+        if (this.isMobile) {
+            this.setupMobileFeatures();
+        }
     }
 
     setupToolbar() {
-        this.toolbarOptions = [
+        this.toolbarOptions = this.isMobile ? [
+            ['bold', 'italic', 'underline'],
+            [{ 'header': [1, 2, 3, false] }],
+            [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+            ['link', 'image'],
+            ['clean']
+        ] : [
             ['bold', 'italic', 'underline', 'strike'],
             ['blockquote', 'code-block'],
             [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
@@ -32,6 +42,39 @@ class AuroraEditor {
             ['link', 'image'],
             ['clean']
         ];
+    }
+
+    setupMobileFeatures() {
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            this.handleSwipe(touchStartX - touchEndX);
+        });
+
+        // Toggle document list for mobile
+        const docListToggle = document.querySelector('[data-action="documents"]');
+        if (docListToggle) {
+            docListToggle.addEventListener('click', () => {
+                document.querySelector('.document-management').classList.toggle('active');
+            });
+        }
+    }
+
+    handleSwipe(diff) {
+        const swipeThreshold = 50;
+        if (Math.abs(diff) > swipeThreshold) {
+            if (diff > 0 && this.currentPage < this.totalPages) {
+                this.goToNextPage();
+            } else if (diff < 0 && this.currentPage > 1) {
+                this.goToPreviousPage();
+            }
+        }
     }
 
     createInitialPage() {
@@ -67,30 +110,12 @@ class AuroraEditor {
     }
 
     setupEventListeners() {
-        document.getElementById('newPageBtn').addEventListener('click', () => {
-            this.addNewPage();
-        });
-
-        document.querySelector('[data-action="new"]').addEventListener('click', () => {
-            this.createNewDocument();
-        });
-
-        document.querySelector('[data-action="save"]').addEventListener('click', () => {
-            this.saveDocument();
-        });
-
-        document.querySelector('[data-action="export-pdf"]').addEventListener('click', () => {
-            this.exportToPDF();
-        });
-        
-        document.querySelector('[data-action="export-docx"]').addEventListener('click', () => {
-            this.exportToWord();
-        });
-        
-        document.querySelector('[data-action="export-txt"]').addEventListener('click', () => {
-            this.exportToText();
-        });
-
+        document.getElementById('newPageBtn').addEventListener('click', () => this.addNewPage());
+        document.querySelector('[data-action="new"]').addEventListener('click', () => this.createNewDocument());
+        document.querySelector('[data-action="save"]').addEventListener('click', () => this.saveDocument());
+        document.querySelector('[data-action="export-pdf"]').addEventListener('click', () => this.exportToPDF());
+        document.querySelector('[data-action="export-docx"]').addEventListener('click', () => this.exportToWord());
+        document.querySelector('[data-action="export-txt"]').addEventListener('click', () => this.exportToText());
         document.getElementById('documentTitle').addEventListener('input', (e) => {
             this.currentDocumentTitle = e.target.value;
         });
@@ -205,7 +230,8 @@ class AuroraEditor {
     }
 
     exportToWord() {
-        const content = this.editors.map(editor => editor.root.innerHTML).join('<br clear="all" style="page-break-before:always">');
+        const content = this.editors.map(editor => editor.root.innerHTML)
+            .join('<br clear="all" style="page-break-before:always">');
         const html = `
             <html>
                 <head>
@@ -228,7 +254,8 @@ class AuroraEditor {
     }
 
     exportToText() {
-        const content = this.editors.map(editor => editor.getText()).join('\n\n--- Nova Página ---\n\n');
+        const content = this.editors.map(editor => editor.getText())
+            .join('\n\n--- Nova Página ---\n\n');
         const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
         const link = document.createElement('a');
         link.href = URL.createObjectURL(blob);
@@ -247,11 +274,14 @@ class AuroraEditor {
             this.currentPage = 1;
             this.totalPages = 1;
             this.createInitialPage();
+            this.updatePageNavigation();
         }
     }
 
     saveDocument() {
-        const documentName = this.currentDocumentTitle || document.getElementById('documentTitle').value || 'Documento sem título';
+        const documentName = this.currentDocumentTitle || 
+                           document.getElementById('documentTitle').value || 
+                           'Documento sem título';
         const pagesContent = this.editors.map(editor => editor.root.innerHTML);
         
         const document = {
@@ -310,6 +340,10 @@ class AuroraEditor {
             
             this.currentPage = 1;
             this.updatePageNavigation();
+
+            if (this.isMobile) {
+                document.querySelector('.document-management').classList.remove('active');
+            }
         }
     }
 
@@ -323,6 +357,15 @@ class AuroraEditor {
     }
 }
 
+// Initialize on load
 document.addEventListener('DOMContentLoaded', () => {
     window.editor = new AuroraEditor();
+});
+
+// Handle resize events
+window.addEventListener('resize', () => {
+    const newIsMobile = window.innerWidth <= 768;
+    if (newIsMobile !== window.editor.isMobile) {
+        window.editor = new AuroraEditor();
+    }
 });
