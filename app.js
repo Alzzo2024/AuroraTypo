@@ -648,3 +648,137 @@ window.addEventListener('resize', () => {
         window.editor = new AuroraEditor();
     }
 });
+
+// Mobile-specific functionality
+class MobileHandler {
+    constructor(editor) {
+        this.editor = editor;
+        this.isMobile = window.innerWidth <= 768;
+        this.init();
+    }
+
+    init() {
+        this.setupMobileNavigation();
+        this.setupMobileDocumentsList();
+        this.setupMobileLanguageSelector();
+        this.handleMobileToolbar();
+        this.setupMobileResizeHandling();
+    }
+
+    setupMobileNavigation() {
+        document.querySelector('[data-action="documents"]')?.addEventListener('click', () => {
+            const docManagement = document.querySelector('.document-management');
+            docManagement.classList.toggle('active');
+            if (docManagement.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
+        });
+    }
+
+    setupMobileDocumentsList() {
+        const closeDocList = () => {
+            document.querySelector('.document-management').classList.remove('active');
+            document.body.style.overflow = '';
+        };
+
+        document.querySelectorAll('.document-management button').forEach(btn => {
+            btn.addEventListener('click', closeDocList);
+        });
+    }
+
+    setupMobileLanguageSelector() {
+        const languageModal = document.getElementById('language-modal');
+        
+        document.querySelector('[data-action="language"]')?.addEventListener('click', (e) => {
+            e.preventDefault();
+            languageModal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        });
+
+        languageModal.addEventListener('click', (e) => {
+            if (e.target === languageModal) {
+                languageModal.style.display = 'none';
+                document.body.style.overflow = '';
+            }
+        });
+
+        document.querySelectorAll('.language-option').forEach(option => {
+            option.addEventListener('click', () => {
+                languageModal.style.display = 'none';
+                document.body.style.overflow = '';
+            });
+        });
+    }
+
+    handleMobileToolbar() {
+        if (this.isMobile) {
+            const toolbar = document.querySelector('.ql-toolbar');
+            if (toolbar) {
+                toolbar.addEventListener('touchstart', (e) => {
+                    e.preventDefault();
+                    const target = e.target.closest('button, .ql-picker');
+                    if (target) {
+                        target.click();
+                    }
+                });
+            }
+        }
+    }
+
+    setupMobileResizeHandling() {
+        let touchStartY;
+        let initialHeight;
+
+        document.querySelectorAll('.page').forEach(page => {
+            page.addEventListener('touchstart', (e) => {
+                if (e.touches.length === 2) {
+                    e.preventDefault();
+                    touchStartY = e.touches[0].clientY;
+                    initialHeight = page.offsetHeight;
+                }
+            }, { passive: false });
+
+            page.addEventListener('touchmove', (e) => {
+                if (e.touches.length === 2) {
+                    e.preventDefault();
+                    const touchDeltaY = e.touches[0].clientY - touchStartY;
+                    const newHeight = initialHeight + touchDeltaY;
+                    if (newHeight > 300) {
+                        page.style.height = `${newHeight}px`;
+                    }
+                }
+            }, { passive: false });
+        });
+    }
+
+    static handleOrientation() {
+        const orientation = window.orientation;
+        const toolbar = document.querySelector('.ql-toolbar');
+        
+        if (toolbar) {
+            if (orientation === 90 || orientation === -90) {
+                toolbar.classList.add('landscape');
+            } else {
+                toolbar.classList.remove('landscape');
+            }
+        }
+    }
+}
+
+// Initialize mobile handler when document is ready
+document.addEventListener('DOMContentLoaded', () => {
+    const mobileHandler = new MobileHandler(window.editor);
+    window.addEventListener('orientationchange', MobileHandler.handleOrientation);
+    MobileHandler.handleOrientation();
+});
+
+// Handle resize events
+window.addEventListener('resize', () => {
+    const newIsMobile = window.innerWidth <= 768;
+    if (newIsMobile !== window.editor.isMobile) {
+        window.editor.isMobile = newIsMobile;
+        new MobileHandler(window.editor);
+    }
+});
